@@ -2,9 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-
 import requests
 import io
+
+from IPython import get_ipython
 
 
 class Analyze:
@@ -23,10 +24,15 @@ class Analyze:
         return data_frame.describe()
 
     def plot_by_count(self, counted_column):
+        #get_ipython().magic('matplotlib inline')
         return counted_column.plot.bar()
 
     def plot_dataset(self, data_frame):
+        #get_ipython().magic('matplotlib inline')
         sns.pairplot(data_frame)
+
+    def transform_non_numerical_data(self, data_frame):
+        return pd.concat([data_frame, pd.get_dummies(data_frame.sex), pd.get_dummies(data_frame.smoker), pd.get_dummies(data_frame.region)], axis=1)
 
     def get_data_set_informations(self, data_frame):
         print('Dataset obsahuje {} stlpcov \n'.format(data_frame.shape[1]))
